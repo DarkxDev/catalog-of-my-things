@@ -32,4 +32,12 @@ describe Book do
       expect(book.send(:can_be_archived?)).to eq(false)
     end
   end
+
+  describe '#all' do
+    it 'returns an array of created books' do
+      count = Book.all.length
+      book = Book.new(genre, author, source, label, publish_date, publisher, 'good')
+      expect(count).to eq(count + 1)
+    end
+  end
 end
