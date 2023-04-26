@@ -8,7 +8,7 @@ def main
   puts '
     Welcome to Catalog of my Things app!'
 
-    loop do
+  loop do
     menu.display_options
 
     choice = gets.chomp.to_i
