@@ -15,4 +15,21 @@ describe Book do
       expect(book.cover_state).to eq('good')
     end
   end
+
+  describe '#can_be_archived?' do
+    it 'expect to return true if Item#can_be_archived? is true' do
+      item = Item.new(genre, author, source, label, Time.now - (60 * 60 * 24 * 365 * 11), publisher, 'good')
+      expect(item.send(:can_be_archived?)).to eq(true)
+    end
+
+    it 'expect to return true if cover_state equals "bad"' do
+      item = Item.new(genre, author, source, label, Time.now - (60 * 60 * 24 * 365 * 9), publisher, 'bad')
+      expect(item.send(:can_be_archived?)).to eq(true)
+    end
+
+    it 'expect to return false if if Item#can_be_archived? is false and cover_state equals "good"' do
+      item = Item.new(genre, author, source, label, Time.now - (60 * 60 * 24 * 365 * 9), publisher, 'good')
+      expect(item.send(:can_be_archived?)).to eq(false)
+    end
+  end
 end
