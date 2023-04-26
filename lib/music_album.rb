@@ -1,4 +1,4 @@
-require_relative './item'
+require_relative '../item'
 
 class MusicAlbum < Item
   attr_accessor :on_spotify
@@ -12,7 +12,7 @@ class MusicAlbum < Item
 
   # rubocop:enable Metrics/ParameterLists
 
-  def can_be_archived?()
-    return true if super && on_spotify
+  def can_be_archived?
+    super && @on_spotify
   end
 end
