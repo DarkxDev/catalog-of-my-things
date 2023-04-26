@@ -2,10 +2,9 @@ require_relative '../lib/genre'
 
 describe Genre do
   let(:genre) { Genre.new('Horror') }
-  let(:item) { Item.new(genre, 'Isaac Asimov', 'Foundation', nil, Time.now)}
+  let(:item) { Item.new(genre, 'Isaac Asimov', 'Foundation', nil, Time.now) }
 
   describe '#initialize' do
-
     it 'creates a new genre with a name and id' do
       expect(genre.name).to eq 'Horror'
       expect(genre.id).to be_between(1, 1000)
