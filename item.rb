@@ -1,7 +1,8 @@
 class Item
-  attr_reader :genre, :author, :source, :label, :publish_date, :archived
+  attr_reader :id, :genre, :author, :source, :label, :publish_date, :archived
 
   def initialize(genre, author, source, label, publish_date)
+    @id = Time.now.to_i
     @genre = genre
     @author = author
     @source = source
