@@ -21,12 +21,12 @@ describe Item do
   describe '#can_be_archived?' do
     it 'expect to return true if publish_date is older than 10 years' do
       item = Item.new(genre, author, source, label, Time.now - (60 * 60 * 24 * 365 * 11))
-      expect(item.can_be_archived?).to eq(true)
+      expect(item.send(:can_be_archived?)).to eq(true)
     end
 
     it 'expect to return false if publish_date is not older than 10 years' do
       item = Item.new(genre, author, source, label, Time.now - (60 * 60 * 24 * 365 * 9))
-      expect(item.can_be_archived?).to eq(false)
+      expect(item.send(:can_be_archived?)).to eq(false)
     end
   end
 end
