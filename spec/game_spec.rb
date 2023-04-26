@@ -21,13 +21,13 @@ describe Game do
   end
 
   describe '#can_be_archived?' do
-    it 'expect to return true if Item#can_be_archived? AND if last_played_at is older than 2 years' do
+    it 'expect to return true if Item#can_be_archived? is true AND if last_played_at is older than 2 years' do
       game = Game.new(genre, author, source, label, Time.now - (60 * 60 * 24 * 365 * 11),
                       multiplayer, Time.now - (60 * 60 * 24 * 365 * 3))
       expect(game.send(:can_be_archived?)).to eq(true)
     end
 
-    it 'expect to return false otherwise' do
+    it 'expect to return false if Item#can_be_archived? is true AND if last_played_at is NOT older than 2 years' do
       game = Game.new(genre, author, source, label, Time.now - (60 * 60 * 24 * 365 * 11),
                       multiplayer, Time.now - (60 * 60 * 24 * 365 * 1))
       expect(game.send(:can_be_archived?)).to eq(false)

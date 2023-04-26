@@ -11,4 +11,8 @@ class Game < Item
     @last_played_at = last_played_at
   end
   # rubocop:enable Metrics/ParameterLists
+
+  def can_be_archived?
+    super && Time.now - @last_played_at > (60 * 60 * 24 * 365 * 2)
+  end
 end
