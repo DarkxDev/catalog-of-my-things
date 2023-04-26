@@ -8,10 +8,15 @@ class Label
     @title = title
     @color = color
     @items = []
+    Label.all << self
   end
 
   def add_item(item)
     @items.push(item)
     item.label = self
+  end
+
+  def self.all
+    @all ||= []
   end
 end

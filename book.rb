@@ -8,6 +8,7 @@ class Book < Item
     super(genre, author, source, label, publish_date)
     @publisher = publisher
     @cover_state = cover_state
+    Book.all << self
   end
   # rubocop:enable Metrics/ParameterLists
 
@@ -15,5 +16,9 @@ class Book < Item
     return true if @cover_state == 'bad'
 
     super
+  end
+
+  def self.all
+    @all ||= []
   end
 end

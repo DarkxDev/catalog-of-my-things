@@ -17,4 +17,14 @@ describe Label do
       expect(label.items.last).to eq(item)
     end
   end
+
+  describe '#all' do
+    it 'returns an array of created labels' do
+      count = Label.all.length
+      Label.new('title', 'color')
+      new_count = Label.all.length
+
+      expect(new_count).to eq(count + 1)
+    end
+  end
 end
