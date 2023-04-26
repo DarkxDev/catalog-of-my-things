@@ -2,6 +2,12 @@ require 'date'
 require './game'
 
 describe Game do
+  let(:genre) { double('genre') }
+  let(:author) { double('author') }
+  let(:source) { double('source') }
+  let(:label) { double('label') }
+  let(:publish_date) { double('publish_date') }
+
   describe '#initialize' do
     it 'creates a new game with multiplayer and last_played_at' do
       multiplayer = true
