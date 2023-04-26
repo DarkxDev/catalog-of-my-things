@@ -1,13 +1,14 @@
-require_relative './app'
-require_relative './menu'
+require_relative './lib/app'
+require_relative './lib/menu'
 
 def main
+  app = App.new
   menu = Menu.new(app)
 
   puts '
-  Welcome to Catalog of my Things app!'
+    Welcome to Catalog of my Things app!'
 
-  loop do
+    loop do
     menu.display_options
 
     choice = gets.chomp.to_i
