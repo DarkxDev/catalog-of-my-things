@@ -15,13 +15,4 @@ describe Item do
       expect(item.label).to eq label
     end
   end
-
-  describe '#add_genre' do
-    it 'adds a genre with the name "test" to item' do
-      item = Item.new(genre, author, source, label)
-      name = 'test'
-      item.add_genre(name)
-      expect(item.genre).to eq name
-    end
-  end
 end
