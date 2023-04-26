@@ -29,4 +29,11 @@ describe Item do
       expect(item.send(:can_be_archived?)).to eq(false)
     end
   end
+
+  describe '#move_to_archive' do
+    it 'should change the archived property to true if #can_be_archived? is true' do
+      item = Item.new(genre, author, source, label, Time.now - (60 * 60 * 24 * 365 * 11))
+      expect(item.archived).to eq(true)
+    end
+  end
 end
