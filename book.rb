@@ -10,4 +10,10 @@ class Book < Item
     @cover_state = cover_state
   end
   # rubocop:enable Metrics/ParameterLists
+
+  def can_be_archived?
+    return true if @cover_state == 'bad'
+
+    super
+  end
 end
