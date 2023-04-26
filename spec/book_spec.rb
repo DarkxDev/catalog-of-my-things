@@ -36,8 +36,10 @@ describe Book do
   describe '#all' do
     it 'returns an array of created books' do
       count = Book.all.length
-      book = Book.new(genre, author, source, label, publish_date, publisher, 'good')
-      expect(count).to eq(count + 1)
+      Book.new(genre, author, source, label, publish_date, publisher, 'good')
+      new_count = Book.all.length
+
+      expect(new_count).to eq(count + 1)
     end
   end
 end
