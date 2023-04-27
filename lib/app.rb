@@ -30,10 +30,10 @@ class App
 
   def list_genres
     if @genres.empty?
-      puts 'No genres registered.' 
+      puts 'No genres registered.'
     else
       puts '### Genres ###'
-    @genres.each_with_index { |genre, index| puts "#{index + 1} - #{genre.name}" }
+      @genres.each_with_index { |genre, index| puts "#{index + 1} - #{genre.name}" }
     end
   end
 
@@ -75,7 +75,7 @@ class App
     else
       puts '### Music Albums ###'
       @music_albums.each do |album|
-      puts "
+        puts "
       Genre: #{album.genre}
       Author: #{album.author}
       Source: #{album.source}
@@ -83,7 +83,7 @@ class App
       Publish Date: #{album.publish_date}
       On Spotify: #{album.on_spotify}
       "
-    end
+      end
     end
   end
 
@@ -117,7 +117,7 @@ class App
   def add_music_album
     MusicAlbum.create
   end
-  
+
   def add_game
     Game.create
   end
