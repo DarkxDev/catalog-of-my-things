@@ -2,15 +2,27 @@ require_relative '../item'
 require_relative './genre'
 require_relative './music_album'
 require_relative '../game'
+require './author'
+require './book'
+require './label'
+require './file_handler'
 
 class App
   attr_accessor :genres, :authors, :music_albums, :games
 
+  include FileHandler
+
   def initialize
+    Author.load
+    Book.load
+    Game.load
+    Label.load
+    @authors = Author.all
+    @books = Book.all
+    @games = Game.all
+    @labels = Label.all
     @genres = []
-    @authors = []
     @music_albums = []
-    @games = []
   end
 
   def list_genres
@@ -19,8 +31,35 @@ class App
   end
 
   def list_authors
-    puts 'No authors found.' if @authors.empty?
-    @authors.each { |author| puts "#{author.first_name} #{author.last_name}" }
+    if @authors.empty?
+      puts 'No authors found'
+    else
+      puts '### Authors ###'
+      @authors.each_with_index { |author, index| puts "#{index + 1} - #{author.first_name} #{author.last_name}" }
+    end
+  end
+
+  def list_books
+    if @books.empty?
+      puts 'No books found'
+    else
+      puts '### Books ###'
+      @books.each_with_index do |book, index|
+        puts "
+        #{index + 1} - Publisher: #{book.publisher}, Cover state: #{book.cover_state}"
+      end
+    end
+  end
+
+  def list_labels
+    if @labels.empty?
+      puts 'No labels found'
+    else
+      puts '### Labels ###'
+      @labels.each_with_index do |label, index|
+        puts "#{index + 1} - Title: #{label.title}, Color: #{label.color}"
+      end
+    end
   end
 
   def list_music_albums
@@ -38,17 +77,25 @@ class App
   end
 
   def list_games
-    puts 'No games found.' if @games.empty?
-    @games.each do |game|
-      puts "
-      Genre: #{game.genre}
-      Author: #{game.author}
-      Source: #{game.source}
-      Label: #{game.label}
-      Publish Date: #{game.publish_date.strftime('%m-%d-%Y')}
-      Multiplayer: #{game.multiplayer}
-      Last Played: #{game.last_played_at.strftime('%m/%d/%Y')}
-      "
+    if @games.empty?
+      puts 'No games found'
+    else
+      puts '### Games ###'
+      @games.each do |game|
+        puts "
+        Genre: #{game.genre}
+        Author: #{game.author}
+        Source: #{game.source}
+        Label: #{game.label}
+        Publish Date: #{
+          game.publish_date # .strftime('%m-%d-%Y')
+        }
+        Multiplayer: #{game.multiplayer}
+        Last Played: #{
+          game.last_played_at # .strftime('%m/%d/%Y')
+        }
+        "
+      end
     end
   end
 
@@ -62,8 +109,7 @@ class App
     print 'Label: '
     label = gets.chomp
     print 'Publish Date [DD/MM/YYYY]: '
-    input = gets.chomp
-    publish_date = Date.parse(input)
+    publish_date = gets.chomp
 
     [genre, author, source, label, publish_date]
   end
@@ -103,10 +149,30 @@ class App
     end
 
     print 'Last Played [DD/MM/YYYY]: '
-    input = gets.chomp
-    last_played_at = Date.parse(input)
+    last_played_at = gets.chomp
 
     new_game = Game.new(*basic_inputs, multiplayer, last_played_at)
     @games << new_game
+  end
+
+  def add_author
+    Author.create
+  end
+
+  def add_book
+    Book.create
+  end
+
+  def add_label
+    Label.create
+  end
+
+  def exit
+    FileHandler.save(@authors, 'authors.json') if @authors.any?
+    FileHandler.save(@books, 'books.json') if @books.any?
+    FileHandler.save(@games, 'games.json') if @games.any?
+    FileHandler.save(@labels, 'labels.json') if @labels.any?
+    puts 'Thanks for using this app!'
+    exit!
   end
 end

@@ -19,4 +19,26 @@ class Label
   def self.all
     @all ||= []
   end
+
+  def self.create
+    print 'Title: '
+    title = gets.chomp
+    print 'Color: '
+    color = gets.chomp
+    label = Label.new(title, color)
+    puts 'Label created successfully!'
+    label
+  end
+
+  def self.load
+    return unless File.exist?('./data/labels.json')
+
+    labels = FileHandler.read_file('./data/labels.json')
+    labels.map do |label_hash|
+      Label.new(
+        label_hash['title'],
+        label_hash['color']
+      )
+    end
+  end
 end
