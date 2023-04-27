@@ -43,7 +43,7 @@ class MusicAlbum < Item
   def self.load
     return unless File.exist?('./data/music_albums.json')
 
-    albums = File.read('./data/music_albums.json')
+    albums = FileHandler.read_file('./data/music_albums.json')
     albums.map do |albums_hash|
       MusicAlbum.new(
         albums_hash['genre'],

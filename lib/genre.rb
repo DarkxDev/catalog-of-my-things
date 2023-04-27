@@ -30,7 +30,7 @@ class Genre
   def self.load
     return unless File.exist?('./data/genres.json')
 
-    genres = File.read('./data/genres.json')
+    genres = FileHandler.read_file('./data/genres.json')
     genres.map do |genre_hash|
       Genre.new(genre_hash['name'])
     end
