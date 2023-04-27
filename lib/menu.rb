@@ -7,7 +7,7 @@ class Menu
 
   def display_options
     puts "
-    What shoudl we do?
+    What should we do?
     --------------------------
     1 - List all books
     2 - List all music albums

@@ -6,6 +6,7 @@
   - [🛠 Built With](#built-with)
     - [Tech Stack](#tech-stack)
     - [Key Features](#key-features)
+    - [🚀 Live Demo](#live-demo)
 - [💻 Getting Started](#getting-started)
   - [Prerequisites](#prerequisites)
   - [Setup](#setup)
@@ -40,6 +41,14 @@
 - Organize them into a collection
 - Preseve and load data into json files on app start/exit
 - List and display the different categories
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+<!-- LIVE DEMO -->
+
+## 🚀 Live Demo <a name="live-demo"></a>
+
+Check our Video Presentation for this project [here:](https://drive.google.com/file/d/15OfjSKSGR5Jp-SEMfv5aCM3gF6SrRL-F/view?usp=share_link)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
