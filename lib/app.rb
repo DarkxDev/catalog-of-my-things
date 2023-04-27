@@ -2,13 +2,18 @@ require_relative '../item'
 require_relative './genre'
 require_relative './music_album'
 require_relative '../game'
+require './author'
+require './file_handler'
 
 class App
   attr_accessor :genres, :authors, :music_albums, :games
 
+  include FileHandler
+
   def initialize
+    Author.load
     @genres = []
-    @authors = []
+    @authors = Author.all
     @music_albums = []
     @games = []
   end
@@ -19,8 +24,12 @@ class App
   end
 
   def list_authors
-    puts 'No authors found.' if @authors.empty?
-    @authors.each { |author| puts "#{author.first_name} #{author.last_name}" }
+    if @authors.empty?
+      puts 'No authors found'
+    else
+      puts '### Authors ###'
+      @authors.each_with_index { |author, index| puts "#{index + 1} - #{author.first_name} #{author.last_name}" }
+    end
   end
 
   def list_music_albums
@@ -108,5 +117,15 @@ class App
 
     new_game = Game.new(*basic_inputs, multiplayer, last_played_at)
     @games << new_game
+  end
+
+  def add_author
+    Author.create
+  end
+
+  def exit
+    FileHandler.save(@authors, 'authors.json') if @authors.any?
+    puts 'Thanks for using this app!'
+    exit!
   end
 end
