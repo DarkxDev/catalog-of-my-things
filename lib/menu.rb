@@ -20,6 +20,7 @@ class Menu
     9 - Add a game
     10 - Add an author
     11 - Add a label
+    12 - Add a genre
     --------------------------
     0 - Exit
   "
@@ -39,6 +40,7 @@ class Menu
     when 9 then @app.add_game
     when 10 then @app.add_author
     when 11 then @app.add_label
+    when 12 then @app.add_genre
     when 0 then @app.exit
     else
       puts 'Invalid option. Please choose again.'

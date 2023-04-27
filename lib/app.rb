@@ -17,17 +17,24 @@ class App
     Book.load
     Game.load
     Label.load
+    Genre.load
+    MusicAlbum.load
+
     @authors = Author.all
     @books = Book.all
     @games = Game.all
     @labels = Label.all
-    @genres = []
-    @music_albums = []
+    @genres = Genre.all
+    @music_albums = MusicAlbum.all
   end
 
   def list_genres
-    puts 'No genres registered.' if @genres.empty?
-    @genres.each { |genre| puts genre.name }
+    if @genres.empty?
+      puts 'No genres registered.'
+    else
+      puts '### Genres ###'
+      @genres.each_with_index { |genre, index| puts "#{index + 1} - #{genre.name}" }
+    end
   end
 
   def list_authors
@@ -63,16 +70,20 @@ class App
   end
 
   def list_music_albums
-    puts 'No albums found.' if @music_albums.empty?
-    @music_albums.each do |album|
-      puts "
+    if @music_albums.empty?
+      puts 'No albums found.'
+    else
+      puts '### Music Albums ###'
+      @music_albums.each do |album|
+        puts "
       Genre: #{album.genre}
       Author: #{album.author}
       Source: #{album.source}
       Label: #{album.label}
-      Publish Date: #{album.publish_date.strftime('%Y-%m-%d')}
+      Publish Date: #{album.publish_date}
       On Spotify: #{album.on_spotify}
       "
+      end
     end
   end
 
@@ -88,71 +99,27 @@ class App
         Source: #{game.source}
         Label: #{game.label}
         Publish Date: #{
-          game.publish_date # .strftime('%m-%d-%Y')
+          game.publish_date
         }
         Multiplayer: #{game.multiplayer}
         Last Played: #{
-          game.last_played_at # .strftime('%m/%d/%Y')
+          game.last_played_at
         }
         "
       end
     end
   end
 
-  def user_basic_inputs
-    print 'Genre: '
-    genre = gets.chomp
-    print 'Author: '
-    author = gets.chomp
-    print 'Source: '
-    source = gets.chomp
-    print 'Label: '
-    label = gets.chomp
-    print 'Publish Date [DD/MM/YYYY]: '
-    publish_date = gets.chomp
-
-    [genre, author, source, label, publish_date]
+  def add_genre
+    Genre.create
   end
 
   def add_music_album
-    basic_inputs = user_basic_inputs
-
-    print 'Is it on Spotify? [Y/N]: '
-    on_spotify = gets.chomp
-    case on_spotify
-    when 'Y'
-      on_spotify = true
-    when 'N'
-      on_spotify = false
-    else
-      puts "Invalid input. Please enter 'Y' or 'N'."
-    end
-
-    new_music_album = MusicAlbum.new(*basic_inputs, on_spotify)
-    @music_albums << new_music_album
-
-    puts 'Album added successfully.'
+    MusicAlbum.create
   end
 
   def add_game
-    basic_inputs = user_basic_inputs
-
-    print 'Is it Multiplayer? [Y/N]: '
-    multiplayer = gets.chomp
-    case multiplayer
-    when 'Y'
-      multiplayer = true
-    when 'N'
-      multiplayer = false
-    else
-      puts "Invalid input. Please enter 'Y' or 'N'."
-    end
-
-    print 'Last Played [DD/MM/YYYY]: '
-    last_played_at = gets.chomp
-
-    new_game = Game.new(*basic_inputs, multiplayer, last_played_at)
-    @games << new_game
+    Game.create
   end
 
   def add_author
@@ -172,6 +139,8 @@ class App
     FileHandler.save(@books, 'books.json') if @books.any?
     FileHandler.save(@games, 'games.json') if @games.any?
     FileHandler.save(@labels, 'labels.json') if @labels.any?
+    FileHandler.save(@genres, 'genres.json') if @genres.any?
+    FileHandler.save(@music_albums, 'music_albums.json') if @music_albums.any?
     puts 'Thanks for using this app!'
     exit!
   end
