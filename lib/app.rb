@@ -4,6 +4,7 @@ require_relative './music_album'
 require_relative '../game'
 require './author'
 require './book'
+require './label'
 require './file_handler'
 
 class App
@@ -15,9 +16,11 @@ class App
     Author.load
     Book.load
     Game.load
+    Label.load
     @authors = Author.all
     @books = Book.all
     @games = Game.all
+    @labels = Label.all
     @genres = []
     @music_albums = []
   end
@@ -46,6 +49,17 @@ class App
         #{index + 1} - Publisher:
         #{book.publisher}, Cover state:
         #{book.cover_state}"
+      end
+    end
+  end
+
+  def list_labels
+    if @labels.empty?
+      puts 'No labels found'
+    else
+      puts '### Labels ###'
+      @labels.each_with_index do |label, index|
+        puts "#{index + 1} - Title: #{label.title}, Color: #{label.color}"
       end
     end
   end
@@ -155,10 +169,15 @@ class App
     Book.create
   end
 
+  def add_label
+    Label.create
+  end
+
   def exit
     FileHandler.save(@authors, 'authors.json') if @authors.any?
     FileHandler.save(@books, 'books.json') if @books.any?
     FileHandler.save(@games, 'games.json') if @games.any?
+    FileHandler.save(@labels, 'labels.json') if @labels.any?
     puts 'Thanks for using this app!'
     exit!
   end
