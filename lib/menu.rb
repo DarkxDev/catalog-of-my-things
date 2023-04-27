@@ -36,6 +36,7 @@ class Menu
     when 8 then @app.add_music_album
     when 9 then @app.add_game
     when 0
+      @app.save_data
       puts 'Thanks for using this app!'
       exit
     else

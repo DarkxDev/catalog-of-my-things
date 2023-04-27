@@ -2,9 +2,12 @@ require_relative '../item'
 require_relative './genre'
 require_relative './music_album'
 require_relative '../game'
+require_relative './data_storage'
 
 class App
   attr_accessor :genres, :authors, :music_albums, :games
+
+  include DataStorage
 
   def initialize
     @genres = []
@@ -108,5 +111,7 @@ class App
 
     new_game = Game.new(*basic_inputs, multiplayer, last_played_at)
     @games << new_game
+
+    puts 'Game added successfully.'
   end
 end
