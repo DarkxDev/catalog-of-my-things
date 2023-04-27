@@ -14,11 +14,12 @@ class App
   def initialize
     Author.load
     Book.load
+    Game.load
     @authors = Author.all
     @books = Book.all
+    @games = Game.all
     @genres = []
     @music_albums = []
-    @games = []
   end
 
   def list_genres
@@ -64,17 +65,25 @@ class App
   end
 
   def list_games
-    puts 'No games found.' if @games.empty?
-    @games.each do |game|
-      puts "
-      Genre: #{game.genre}
-      Author: #{game.author}
-      Source: #{game.source}
-      Label: #{game.label}
-      Publish Date: #{game.publish_date.strftime('%m-%d-%Y')}
-      Multiplayer: #{game.multiplayer}
-      Last Played: #{game.last_played_at.strftime('%m/%d/%Y')}
-      "
+    if @games.empty?
+      puts 'No games found'
+    else
+      puts '### Games ###'
+      @games.each do |game|
+        puts "
+        Genre: #{game.genre}
+        Author: #{game.author}
+        Source: #{game.source}
+        Label: #{game.label}
+        Publish Date: #{
+          game.publish_date # .strftime('%m-%d-%Y')
+        }
+        Multiplayer: #{game.multiplayer}
+        Last Played: #{
+          game.last_played_at # .strftime('%m/%d/%Y')
+        }
+        "
+      end
     end
   end
 
@@ -88,8 +97,9 @@ class App
     print 'Label: '
     label = gets.chomp
     print 'Publish Date [DD/MM/YYYY]: '
-    input = gets.chomp
-    publish_date = Date.parse(input)
+    # input = gets.chomp
+    # publish_date = Date.parse(input)
+    publish_date = gets.chomp
 
     [genre, author, source, label, publish_date]
   end
@@ -129,8 +139,9 @@ class App
     end
 
     print 'Last Played [DD/MM/YYYY]: '
-    input = gets.chomp
-    last_played_at = Date.parse(input)
+    # input = gets.chomp
+    # last_played_at = Date.parse(input)
+    last_played_at = gets.chomp
 
     new_game = Game.new(*basic_inputs, multiplayer, last_played_at)
     @games << new_game
@@ -147,6 +158,7 @@ class App
   def exit
     FileHandler.save(@authors, 'authors.json') if @authors.any?
     FileHandler.save(@books, 'books.json') if @books.any?
+    FileHandler.save(@games, 'games.json') if @games.any?
     puts 'Thanks for using this app!'
     exit!
   end
