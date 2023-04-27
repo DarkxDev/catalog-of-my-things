@@ -3,6 +3,7 @@ require_relative './genre'
 require_relative './music_album'
 require_relative '../game'
 require './author'
+require './book'
 require './file_handler'
 
 class App
@@ -12,8 +13,10 @@ class App
 
   def initialize
     Author.load
-    @genres = []
+    Book.load
     @authors = Author.all
+    @books = Book.all
+    @genres = []
     @music_albums = []
     @games = []
   end
@@ -29,6 +32,20 @@ class App
     else
       puts '### Authors ###'
       @authors.each_with_index { |author, index| puts "#{index + 1} - #{author.first_name} #{author.last_name}" }
+    end
+  end
+
+  def list_books
+    if @books.empty?
+      puts 'No books found'
+    else
+      puts '### Books ###'
+      @books.each_with_index do |book, index|
+        puts "
+        #{index + 1} - Publisher:
+        #{book.publisher}, Cover state:
+        #{book.cover_state}"
+      end
     end
   end
 
@@ -123,8 +140,13 @@ class App
     Author.create
   end
 
+  def add_book
+    Book.create
+  end
+
   def exit
     FileHandler.save(@authors, 'authors.json') if @authors.any?
+    FileHandler.save(@books, 'books.json') if @books.any?
     puts 'Thanks for using this app!'
     exit!
   end
