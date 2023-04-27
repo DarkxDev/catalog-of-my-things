@@ -46,9 +46,7 @@ class App
       puts '### Books ###'
       @books.each_with_index do |book, index|
         puts "
-        #{index + 1} - Publisher:
-        #{book.publisher}, Cover state:
-        #{book.cover_state}"
+        #{index + 1} - Publisher: #{book.publisher}, Cover state: #{book.cover_state}"
       end
     end
   end
@@ -111,8 +109,6 @@ class App
     print 'Label: '
     label = gets.chomp
     print 'Publish Date [DD/MM/YYYY]: '
-    # input = gets.chomp
-    # publish_date = Date.parse(input)
     publish_date = gets.chomp
 
     [genre, author, source, label, publish_date]
@@ -153,8 +149,6 @@ class App
     end
 
     print 'Last Played [DD/MM/YYYY]: '
-    # input = gets.chomp
-    # last_played_at = Date.parse(input)
     last_played_at = gets.chomp
 
     new_game = Game.new(*basic_inputs, multiplayer, last_played_at)
