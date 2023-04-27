@@ -36,9 +36,9 @@ class Game < Item
     multiplayer = gets.chomp
     print 'Last played at: '
     last_played_at = gets.chomp
-    book = Book.new(genre, author, source, label, publish_date, multiplayer, last_played_at)
+    game = Game.new(genre, author, source, label, publish_date, multiplayer, last_played_at)
     puts 'Game created successfully!'
-    book
+    game
   end
 
   def self.load
